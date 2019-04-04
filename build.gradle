@@ -1,14 +1,9 @@
-import io.github.httpbuilderng.http.*
-import groovyx.net.http.*
-import static groovyx.net.http.MultipartContent.multipart
-
 plugins {
-    id "io.github.http-builder-ng.http-plugin" version "0.1.1"
     id "java"
 }
 
 group 'com.plentymarkets.plentybase.plugin'
-version '1.0-SNAPSHOT'
+version '0.0.1'
 sourceCompatibility = 1.8
 
 repositories {
@@ -25,39 +20,19 @@ dependencies {
     compileOnly fileTree(dir: '/workspace/plenty-tool/build/libs', include: '*.jar')
 
     compileOnly group: 'org.pf4j', name: 'pf4j', version: '2.6.0'
-
-    // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
-   // compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.8'
-
-    // https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core
-   // compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.11.1'
-
-    // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
-//    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.8.1'
 }
 
 task fatJar(type: Jar) {
-    //classifier = 'all'
-
-    // Name of plugin file
-    //baseName = project.name + '-all'
-
-    // Set destination path of jar file. Operating system dependent
-    //destinationDir = file(System.getProperty("user.home") + "/Library/Caches/eu.plentymarkets.plentybase/Plugins/dev")
-
-    String pluginId = "packByLight";
+    String pluginId = "packByLight"
 
     // Name of plugin file
     baseName = pluginId
 
-    // Set destination path of jar file. Operating system dependent
-    destinationDir = file("/Users/jacekwiczkowski/Library/Caches/eu.plentymarkets.plentybase/PluginProductive")
-
     manifest {
-        attributes 'Plugin-Class': 'plentybase.plugin.hue.extensions.PluginStart',
+        attributes 'Plugin-Class': 'plentybase.plugin.hue.PluginStart',
                 'Plugin-Id': pluginId,
-                'Plugin-Version': '0.0.1',
-                'Plugin-Provider': 'base-team'
+                'Plugin-Version': "${project.version}",
+                'Plugin-Provider': 'plentysystems AG'
     }
     // Include resources (plugin.json) in jar
     into 'resources', {
@@ -73,30 +48,4 @@ task fatJar(type: Jar) {
         exclude "META-INF/*.RSA"
     }
     with jar
-}
-
-task installPlugin(type: HttpTask) {
-
-    println jar.archivePath
-
-    config {
-        request.uri = 'https://local.plentybase.de:7331'
-    }
-
-    post {
-        request.uri.path = '/plugins/install'
-        request.contentType = 'multipart/form-data'
-        request.headers['Authorization'] = 'rkgnGXMfX45qWlsKJusJrABdm5Iggog3'
-        request.body = multipart {
-            field 'activated', 'true'
-            part 'plugin', jar.archivePath.name, 'application/java-archive', jar.archivePath
-        }
-
-        request.encoder 'multipart/form-data', OkHttpEncoders.&multipart
-        request.encoder('application/java-archive') {ChainedHttpConfig config, ToServer req->
-            req.toServer(new ByteArrayInputStream(jar.archivePath.bytes))}
-        response.success {
-            println "Successful"
-        }
-    }
 }
