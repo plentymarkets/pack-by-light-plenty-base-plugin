@@ -1,0 +1,51 @@
+plugins {
+    id "java"
+}
+
+group 'com.plentymarkets.plentybase.plugin'
+version '0.0.1'
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    maven { url "https://jitpack.io" }
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    // https://mvnrepository.com/artifact/org.json/json
+    compile group: 'org.json', name: 'json', version: '20180130'
+
+    compileOnly fileTree(dir: '/workspace/plenty-tool/build/libs', include: '*.jar')
+
+    compileOnly group: 'org.pf4j', name: 'pf4j', version: '2.6.0'
+}
+
+task fatJar(type: Jar) {
+    String pluginId = "packByLight"
+
+    // Name of plugin file
+    baseName = pluginId
+
+    manifest {
+        attributes 'Plugin-Class': 'plentybase.plugin.hue.PluginStart',
+                'Plugin-Id': pluginId,
+                'Plugin-Version': "${project.version}",
+                'Plugin-Provider': 'plentysystems AG'
+    }
+    // Include resources (plugin.json) in jar
+    into 'resources', {
+        from 'resources'
+    }
+
+    // Include compile dependencies in jar
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    } {
+        exclude "META-INF/*.SF"
+        exclude "META-INF/*.DSA"
+        exclude "META-INF/*.RSA"
+    }
+    with jar
+}

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel>
+      <module name="com.plentymarkets.plentybase.plugin_main" target="1.8" />
+      <module name="com.plentymarkets.plentybase.plugin_test" target="1.8" />
+      <module name="plenty.base.plugin.hello.world_main" target="1.8" />
+      <module name="plenty.base.plugin.hello.world_test" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
