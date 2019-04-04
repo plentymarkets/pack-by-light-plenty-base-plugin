@@ -21,6 +21,18 @@ public class MenuExtension implements PopupMenuExtension {
 
         if (currentLocale.getLanguage().equals("de")) {
             MenuItem item = new MenuItem("öffne Plugin Ordner");
+            item.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (Desktop.isDesktopSupported()) {
+                        try {
+                            Desktop.getDesktop().open(Context.getPluginDataPath().toFile());
+                        } catch (IOException e1) {
+                            Context.getLogger().error(e1.toString());
+                        }
+                    }
+                }
+            });
             menu.add(item);
         }
         else {
