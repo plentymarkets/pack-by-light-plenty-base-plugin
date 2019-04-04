@@ -1,4 +1,4 @@
-package plentybase.plugin.hue.extensions;
+package plentybase.plugin.hue;
 
 import org.pf4j.Plugin;
 import org.pf4j.PluginException;
