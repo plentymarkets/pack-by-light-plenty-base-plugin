@@ -1,18 +1,16 @@
 package plentybase.plugin.hue.helper;
 
-import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import plentybase.plugin.hue.bean.Response;
 import plentybase.plugin.hue.context.Context;
 
-import javax.swing.*;
 import java.io.*;
 import java.net.*;
 
 
 public class RequestHelper {
 
-    private static Logger logger = LogManager.getLogger("PlentyMarkets");
+    private static Logger logger = Context.getLogger();
     private int responseCode;
 
 
@@ -53,14 +51,14 @@ public class RequestHelper {
 
 
         } catch (MalformedURLException e) {
-            Context.getLogger().error(e.toString());
+            logger.error(e.toString());
         } catch (UnsupportedEncodingException e) {
-            Context.getLogger().error(e.toString());
+            logger.error(e.toString());
         } catch (ProtocolException e) {
-            Context.getLogger().error(e.toString());
+            logger.error(e.toString());
         } catch (SocketTimeoutException ex){
         } catch (IOException e) {
-            Context.getLogger().error(e.toString());
+            logger.error(e.toString());
         }
         return null;
     }
@@ -92,9 +90,9 @@ public class RequestHelper {
             return new Response(content.toString(), con.getResponseCode());
 
         } catch (MalformedURLException e) {
-            Context.getLogger().error(e.toString());
+            logger.error(e.toString());
         } catch (IOException e) {
-            Context.getLogger().error(e.toString());
+            logger.error(e.toString());
         }
         return null;
     }
@@ -125,7 +123,7 @@ public class RequestHelper {
             logger.info("Response Code, lightOn --> " + responseCode + "massage : " + con.getResponseMessage());
             return new Response("", responseCode);
         } catch (IOException e) {
-            Context.getLogger().error(e.toString());;
+            logger.error(e.toString());;
         }
         return null;
     }

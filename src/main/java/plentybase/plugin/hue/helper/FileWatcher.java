@@ -1,10 +1,8 @@
 package plentybase.plugin.hue.helper;
 
-import plentybase.plugin.hue.config.Configuration;
 import plentybase.plugin.hue.context.Context;
-import plentybase.plugin.hue.extensions.PluginStart;
+import plentybase.plugin.hue.PluginStart;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.*;
 

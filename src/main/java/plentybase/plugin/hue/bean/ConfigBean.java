@@ -2,10 +2,11 @@ package plentybase.plugin.hue.bean;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import plentybase.plugin.hue.context.Context;
 
 public class ConfigBean {
 
-    private static Logger logger = LogManager.getLogger("PlentyMarkets");
+    private static Logger logger = Context.getLogger();
 
     private String username;
     private String hubIpAddress;

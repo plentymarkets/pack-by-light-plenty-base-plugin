@@ -35,8 +35,8 @@ public class Controller {
     private int totalItemCount;
     private Integer scannedItemCount;
     private boolean allOrdersComplete;
-    File csv;
-    FileWatcher fw;
+    private File csv;
+    private FileWatcher fw;
 
     public Controller() {
         configBean = new ConfigBean();

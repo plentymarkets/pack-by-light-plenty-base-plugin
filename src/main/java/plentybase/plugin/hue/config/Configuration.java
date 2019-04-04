@@ -2,7 +2,6 @@ package plentybase.plugin.hue.config;
 
 import plentybase.plugin.hue.context.Context;
 import plentybase.plugin.hue.bean.ConfigBean;
-import plentybase.plugin.hue.extensions.PluginStart;
 
 import java.io.*;
 import java.util.Properties;

@@ -4,6 +4,7 @@ import com.plentymarkets.tool.core.event.BaseEventListener;
 import com.plentymarkets.tool.core.event.EventBean;
 import com.plentymarkets.tool.plugins.api.extensions.EventExtension;
 import org.pf4j.Extension;
+import plentybase.plugin.hue.PluginStart;
 import plentybase.plugin.hue.context.Context;
 import plentybase.plugin.hue.controller.Controller;
 

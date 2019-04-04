@@ -7,6 +7,7 @@ import org.json.JSONObject;
 import plentybase.plugin.hue.bean.ConfigBean;
 import plentybase.plugin.hue.bean.Response;
 import plentybase.plugin.hue.bean.LightStateData;
+import plentybase.plugin.hue.context.Context;
 import plentybase.plugin.hue.helper.RequestHelper;
 
 import javax.swing.*;
@@ -14,7 +15,7 @@ import javax.swing.*;
 
 public class HueApiClient {
 
-    private static Logger logger = LogManager.getLogger("PlentyMarkets");
+    private static Logger logger = Context.getLogger();
 
     private RequestHelper builder = new RequestHelper();
     private ConfigBean configBean;
