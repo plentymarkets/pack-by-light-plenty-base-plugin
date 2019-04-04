@@ -3,7 +3,10 @@ package plentybase.plugin.hue;
 import org.pf4j.Plugin;
 import org.pf4j.PluginException;
 import org.pf4j.PluginWrapper;
+import plentybase.plugin.hue.context.Context;
 import plentybase.plugin.hue.controller.Controller;
+
+import javax.swing.*;
 
 
 public class PluginStart extends Plugin {
@@ -12,6 +15,15 @@ public class PluginStart extends Plugin {
 
     public PluginStart(PluginWrapper wrapper) {
         super(wrapper);
+
+        try
+        {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        }
+        catch (Exception e)
+        {
+            Context.getLogger().error(e);
+        }
     }
 
     public static Controller getController(){
