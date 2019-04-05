@@ -2,6 +2,7 @@ package plentybase.plugin.hue.controller;
 
 import com.plentymarkets.tool.core.event.EventBean;
 import org.apache.logging.log4j.Logger;
+import org.json.JSONException;
 import org.json.JSONObject;
 import plentybase.plugin.hue.context.Context;
 import plentybase.plugin.hue.bean.ConfigBean;
@@ -35,8 +36,10 @@ public class Controller {
     private int totalItemCount;
     private Integer scannedItemCount;
     private boolean allOrdersComplete;
+
     private File csv;
     private FileWatcher fw;
+    private Boolean isUsernameSet = false;
 
     public Controller() {
         configBean = new ConfigBean();
@@ -141,6 +144,7 @@ public class Controller {
         if (configBean.getUsername() == null) {
             return false;
         } else {
+            isUsernameSet = true;
             return true;
         }
     }
@@ -175,15 +179,26 @@ public class Controller {
             obj = clientHelper.getClient().authenticate();
 
             if (obj != null) {
-
-                JSONObject success = obj.getJSONObject("success");
-                logger.info(success.toString());
-                if (success != null) {
-                    configBean.setUsername(success.getString("username"));
+                try {
+                    JSONObject success = obj.getJSONObject("success");
+                    if (success != null) {
+                        logger.info(success.toString());
+                        configBean.setUsername(success.getString("username"));
+                        config.writeHueConfig(configBean);
+                        logger.info("write config called");
+                        isUsernameSet = true;
+                        return configBean;
+                    }
+                } catch (JSONException ex) {
+                    logger.info("username isnt generated properly username == error");
+                    configBean.setUsername("error");
                     config.writeHueConfig(configBean);
-                    logger.info("write config called");
-                    return configBean;
+                    isUsernameSet = false;
+                    JFrame frame = new JFrame();
+                    frame.setAlwaysOnTop(true);
+                    JOptionPane.showMessageDialog(frame, "username is not generated properly, please look at the marketplace documentation", "Info", JOptionPane.INFORMATION_MESSAGE);
                 }
+
             }
         }
         return null;
@@ -215,17 +230,20 @@ public class Controller {
             configBean = generateUsernameAndHubIpAddress();
         }
 
-        // # Step 3: reads csv file and puts values into lightMap
-        cacheBoxIdLightIdMapping();
+        if (isUsernameSet) {
+            // # Step 3: reads csv file and puts values into lightMap
+            cacheBoxIdLightIdMapping();
 
-        // # Step 4: fills List with information about lightbulbs in hueApi
-        initLightList();
+            // # Step 4: fills List with information about lightbulbs in hueApi
+            initLightList();
 
-        // # Step 5: set moreThanTenLights
+            // # Step 5: set moreThanTenLights
 
-        if (dataList.size() > 10) {
-            moreThanTenLights = true;
+            if (dataList.size() > 10) {
+                moreThanTenLights = true;
+            }
         }
+
     }
 
     /**
@@ -309,8 +327,6 @@ public class Controller {
 
             } catch (FileNotFoundException e) {
                 logger.error(e.toString());
-                logger.error(e.toString());
-                createCsv();
             } catch (Exception e) {
                 logger.error(e.toString());
             }
