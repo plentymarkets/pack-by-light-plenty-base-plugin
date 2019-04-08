@@ -36,9 +36,10 @@ public class Controller {
     private int totalItemCount;
     private Integer scannedItemCount;
     private boolean allOrdersComplete;
-    File csv;
-    FileWatcher fw;
-    Boolean isUsernameSet = false;
+
+    private File csv;
+    private FileWatcher fw;
+    private Boolean isUsernameSet = false;
 
     public Controller() {
         configBean = new ConfigBean();
@@ -159,7 +160,7 @@ public class Controller {
         if (configBean.getUsername() == null && configBean.getHubIpAddress() == null) {
             logger.info("username is being generated");
 
-            configBean.setHubIpAddress(clientHelper.generateHubIpAdress());
+            configBean.setHubIpAddress(clientHelper.generateHubIpAddress());
 
             // update because the clientHelper needs the username to call the authenticate method
             updateConfigBeanInClientAndClientHelper();
@@ -169,7 +170,9 @@ public class Controller {
             if (obj != null) {
                 JSONObject error = obj.getJSONObject("error");
                 if (error != null && error.getString("description").equals("link button not pressed")) {
-                    JOptionPane.showMessageDialog(null, "Press link button on Phillips Hue Bridge (big button in the middle)", "Info", JOptionPane.INFORMATION_MESSAGE);
+                    JFrame frame = new JFrame();
+                    frame.setAlwaysOnTop(true);
+                    JOptionPane.showMessageDialog(frame, "Press link button on Phillips Hue Bridge (big button in the middle)", "Info", JOptionPane.INFORMATION_MESSAGE);
                 }
             }
             // calls the route again after link button is pressed to generate username.
@@ -191,7 +194,9 @@ public class Controller {
                     configBean.setUsername("error");
                     config.writeHueConfig(configBean);
                     isUsernameSet = false;
-                    JOptionPane.showMessageDialog(null, "username is not generated properly, please look at the marketplace documentation", "Info", JOptionPane.INFORMATION_MESSAGE);
+                    JFrame frame = new JFrame();
+                    frame.setAlwaysOnTop(true);
+                    JOptionPane.showMessageDialog(frame, "username is not generated properly, please look at the marketplace documentation", "Info", JOptionPane.INFORMATION_MESSAGE);
                 }
 
             }
@@ -315,7 +320,9 @@ public class Controller {
                 }
                 else {
                     logger.info("csv is not mapped");
-                    JOptionPane.showMessageDialog(null, "Please map the lightData.csv", "Info", JOptionPane.INFORMATION_MESSAGE);
+                    JFrame frame = new JFrame();
+                    frame.setAlwaysOnTop(true);
+                    JOptionPane.showMessageDialog(frame, "Please map the lightData.csv", "Info", JOptionPane.INFORMATION_MESSAGE);
                 }
 
             } catch (FileNotFoundException e) {

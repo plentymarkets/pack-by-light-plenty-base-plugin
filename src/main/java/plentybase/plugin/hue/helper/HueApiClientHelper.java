@@ -72,7 +72,7 @@ public class HueApiClientHelper {
      * @return a String wich contains the ipAdress.
      */
 
-    public String generateHubIpAdress() {
+    public String generateHubIpAddress() {
 
         Response response = client.generateHubIpAddress();
 
@@ -80,10 +80,10 @@ public class HueApiClientHelper {
 
         JSONObject actualData = ipData.getJSONObject(0);
 
-        String actuallIpAdress = actualData.getString("internalipaddress"); // gets ip Adress
-        Context.getLogger().info(actuallIpAdress);
+        String currentIPAddress = actualData.getString("internalipaddress"); // gets ip address
+        Context.getLogger().info(currentIPAddress);
 
-        return actuallIpAdress;
+        return currentIPAddress;
     }
 
     public HueApiClient getClient() {

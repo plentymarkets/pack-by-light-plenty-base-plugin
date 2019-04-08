@@ -19,38 +19,29 @@ public class MenuExtension implements PopupMenuExtension {
     @Override
     public void buildMenu(Menu menu) {
 
+        MenuItem item;
+
         if (currentLocale.getLanguage().equals("de")) {
-            MenuItem item = new MenuItem("öffne Plugin Ordner");
-            item.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    if (Desktop.isDesktopSupported()) {
-                        try {
-                            Desktop.getDesktop().open(Context.getPluginDataPath().toFile());
-                        } catch (IOException e1) {
-                            Context.getLogger().error(e1.toString());
-                        }
-                    }
-                }
-            });
-            menu.add(item);
+            item = new MenuItem("Plugin-Ordner öffnen");
         }
-        else {
-            MenuItem item = new MenuItem("Show plugin folder");
-            item.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    if (Desktop.isDesktopSupported()) {
-                        try {
-                            Desktop.getDesktop().open(Context.getPluginDataPath().toFile());
-                        } catch (IOException e1) {
-                            Context.getLogger().error(e1.toString());
-                        }
-                    }
-                }
-            });
-            menu.add(item);
+        else
+        {
+            item = new MenuItem("Show plugin directory");
         }
 
+        item.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (Desktop.isDesktopSupported()) {
+                    try {
+                        Desktop.getDesktop().open(Context.getPluginDataPath().toFile());
+                    } catch (IOException e1) {
+                        Context.getLogger().error(e1.toString());
+                    }
+                }
+            }
+        });
+
+        menu.add(item);
     }
 }
