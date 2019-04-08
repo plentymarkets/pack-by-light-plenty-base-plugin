@@ -141,7 +141,7 @@ public class Controller {
     public boolean loadHueConfig() {
         setBean(config.readHueConfig());
         updateConfigBeanInClientAndClientHelper();
-        if (configBean.getUsername() == null) {
+        if (configBean.getUsername() == null || configBean.getUsername().equals("error")) {
             return false;
         } else {
             isUsernameSet = true;
@@ -157,7 +157,7 @@ public class Controller {
      */
 
     public ConfigBean generateUsernameAndHubIpAddress() {
-        if (configBean.getUsername() == null && configBean.getHubIpAddress() == null) {
+        if (configBean.getUsername() == null || !isUsernameSet) {
             logger.info("username is being generated");
 
             configBean.setHubIpAddress(clientHelper.generateHubIpAddress());
@@ -196,7 +196,7 @@ public class Controller {
                     isUsernameSet = false;
                     JFrame frame = new JFrame();
                     frame.setAlwaysOnTop(true);
-                    JOptionPane.showMessageDialog(frame, "username is not generated properly, please look at the marketplace documentation", "Info", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(frame, "username is not generated properly, please take a look at the marketplace documentation", "Info", JOptionPane.INFORMATION_MESSAGE);
                 }
 
             }
@@ -210,6 +210,7 @@ public class Controller {
      */
 
     public void init() {
+
         // starts thread that detects change in lightdata.csv
         fw.start();
 
