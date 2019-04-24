@@ -211,9 +211,6 @@ public class Controller {
 
     public void init() {
 
-        // starts thread that detects change in lightdata.csv
-        fw.start();
-
         clientHelper = new HueApiClientHelper(configBean);
 
         // # Step 1: reads ColourConfig and updates the configBean with new values if they were set
@@ -222,6 +219,9 @@ public class Controller {
         if (!csv.exists()){
             createCsv();
         }
+
+        // starts thread that detects change in lightdata.csv
+        fw.start();
 
         // # Step 2: loads config  hubIp and Username into config Object and fills variables with values
         // if config is empty username and hubIpAddress is generated.
