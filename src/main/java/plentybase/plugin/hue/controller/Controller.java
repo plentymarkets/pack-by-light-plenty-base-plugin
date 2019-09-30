@@ -4,11 +4,10 @@ import com.plentymarkets.tool.core.event.EventBean;
 import org.apache.logging.log4j.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
-import plentybase.plugin.hue.context.Context;
 import plentybase.plugin.hue.bean.ConfigBean;
 import plentybase.plugin.hue.bean.LightStateData;
 import plentybase.plugin.hue.config.Configuration;
-
+import plentybase.plugin.hue.context.Context;
 import plentybase.plugin.hue.helper.FileWatcher;
 import plentybase.plugin.hue.helper.HueApiClientHelper;
 
