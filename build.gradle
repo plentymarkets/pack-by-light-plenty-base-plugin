@@ -15,11 +15,14 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 
     // https://mvnrepository.com/artifact/org.json/json
-    compile group: 'org.json', name: 'json', version: '20180130'
+    compile group: 'org.json', name: 'json', version: '20190722'
 
-    compileOnly fileTree(dir: '/workspace/plenty-tool/build/libs', include: '*.jar')
+    compileOnly fileTree(dir: '/workspace/plenty-tool/build/libs', include: 'plentyBase.jar')
+    annotationProcessor fileTree(dir: '/workspace/plenty-tool/build/libs', include: 'plentyBase.jar')
 
-    compileOnly group: 'org.pf4j', name: 'pf4j', version: '2.6.0'
+    // https://mvnrepository.com/artifact/org.pf4j/pf4j
+    compileOnly group: 'org.pf4j', name: 'pf4j', version: '3.1.0'
+    annotationProcessor group: 'org.pf4j', name: 'pf4j', version: '3.1.0'
 }
 
 task fatJar(type: Jar) {
